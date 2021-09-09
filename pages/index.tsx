@@ -1,25 +1,31 @@
 import type { NextPage } from "next";
-import {useState} from "react";
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
-const Home: NextPage = () => {
+export const config = { map: true };
 
-  let [transform, setTransform] = useState({
-    transform:''
-  // transform: translate3d(0,0,0) rotate(0.001deg);
-  //   const startStyle = {transform:`rotate(${this.state.rotate}deg)`};
-  })
-  const startStyle = (x:number=0,y:number=0) => {
-    return setTransform({transform:`translate3d(${x+10}px,${y+10}px,0px) rotate(0.001deg)`})
+const Home: NextPage = () => {
+  let [transform3d, setTransform3d] = useState({
+    transform: "translate3d(0, 0, 0px)",
+  });
+  async function transform(screenX: number, screenY: number) {
+    let x, y;
+    let Width = window.innerWidth / 2;
+    let Height = window.innerHeight / 2;
+    x = ((Width - screenX) / 20).toFixed(1);
+    y = ((Height - screenY) / 20).toFixed(1);
+    await setTransform3d({
+      transform: `translate3d(${x}px, ${y}px, 0px)`,
+    });
   }
-    function handleMouseMove(e: any) {
-      console.log(e.screenX,e.screenY);
-      // window.requestAnimationFrame(handleMouseMove)
-      startStyle(e.screenX,e.screenY)
-    }
+  function handleMouseMove(e: any) {
+    window.requestAnimationFrame(() => {
+      transform(e.screenX, e.screenY);
+    });
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -28,16 +34,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.Cover} style={transform} >
-          <div className={styles.image}>
-          <Image
-            src="http://g.auroraone.top/1594348066004.png"
-            layout="fill"
-            sizes="100vh"
-            objectFit="cover"
-            alt=""
-            onMouseMove={handleMouseMove}
-          />
+        <div className={styles.Cover} onMouseMove={handleMouseMove}>
+          <div className={styles.image} style={transform3d}>
+            <div className={styles.img}>
+              <Image
+                src="http://g.auroraone.top/1594348066004.png"
+                layout="fill"
+                sizes="100vh"
+                quality={100}
+                objectFit="cover"
+                alt=""
+              />
+            </div>
           </div>
           <div className={styles.mask}></div>
         </div>
