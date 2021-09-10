@@ -1,0 +1,245 @@
+.container {
+  height: 100vh;
+  height: 100vh;
+}
+.main {
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+/* 自定义 */
+.Cover {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.image {
+  width: calc(100vw + 100px);
+  height: calc(100vh + 100px);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+.image2 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.img {
+  margin-top: 20px;
+}
+.content {
+  width: 1200px;
+  margin: auto;
+  position: relative;
+  padding-bottom: 80px;
+  text-align: center;
+  &::after {
+    content: "";
+    width: 1px;
+    height: calc(100% + 100px);
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    background: #eaeaea;
+    z-index: 0;
+  }
+  .post {
+    position: relative;
+    margin-top: 100px;
+    &:nth-child(2n) {
+      text-align: left;
+      .info {
+        left: 660px;
+      }
+    }
+    &:nth-child(odd) {
+      text-align: right;
+      .info {
+        text-align: left;
+        right: 660px;
+      }
+    }
+    .info {
+      width: 500px;
+      height: 400px;
+      position: absolute;
+      top: 20px;
+      padding: 80px 100px 0 80px;
+      border: 1px solid #eaeaea;
+      border-radius: 6px;
+    }
+    .imageBox {
+      width: 680px;
+      height: 440px;
+      position: relative;
+      font-size: 0;
+      display: inline-block;
+      cursor: pointer;
+      z-index: 3;
+      overflow: hidden;
+      border: 1px solid #f3fafd;
+      transition: all 0.3s;
+      .Image {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        font-size: 0;
+        display: inline-block;
+        cursor: pointer;
+        z-index: 3;
+        overflow: hidden;
+        border: 1px solid #f3fafd;
+        transition: all 0.3s;
+      }
+    }
+  }
+  .more {
+    margin-top: 50px;
+    display: inline-block;
+    .loadmore {
+      position: relative;
+      z-index: 999;
+      text-align: center;
+      .btn {
+        display: inline-block;
+        border: 1px solid #eaeaea;
+        border-radius: 4px;
+        cursor: pointer;
+        height: 34px;
+        line-height: 34px;
+        padding: 0 36px;
+        color: #909090;
+        background: #fff;
+        z-index: 9;
+        letter-spacing: 2px;
+        transition: all 0.3s;
+        &:hover {
+          background: #0084ff;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  height: 100px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(176, 14, 37, 0.7);
+  transform: translate3d(0, 0, 0) rotate(0.001deg);
+  clip-path: polygon(0 0, 25% 0, 60% 100%, 0 100%);
+  z-index: 9;
+}
+
+@media (max-width: 900px) {
+  .mask {
+    width: 100%;
+    clip-path: polygon(0 0, 220px 0, 700px 100%, 0 100%);
+  }
+}
+
+@media (max-width: 775px) {
+  .mask {
+    width: 100%;
+    /* transform: rotate(30deg); */
+    clip-path: none;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .content {
+    width: 900px;
+    .post {
+      &:nth-child(2n) {
+        text-align: left;
+        .info {
+          left: 450px;
+        }
+      }
+      &:nth-child(odd) {
+        text-align: right;
+        .info {
+          right: 450px;
+        }
+      }
+      .imageBox {
+        width: 480px;
+        height: 310px;
+      }
+      .info {
+        top: 10px;
+        width: 420px;
+        height: 290px;
+        padding: 50px 60px 0;
+      }
+    }
+  }
+}
+@media screen and (max-width: 900px) {
+  .content {
+    width: 100%;
+    .post {
+      margin-top: 60px;
+      background: #fff;
+      border-bottom: 1px solid #eaeaea;
+      z-index: 1;
+      &:nth-child(2n) {
+        text-align: left;
+        .info {
+          left: 450px;
+        }
+      }
+      &:nth-child(odd) {
+        text-align: left;
+        .info {
+          right: 450px;
+        }
+      }
+      .imageBox {
+        width: 100%;
+        height: 400px;
+        display: block;
+        text-align: center;
+        border: none;
+        // padding: 100px;
+        .Image {
+          width: 650px;
+        }
+      }
+      .info {
+        position: static;
+        width: 96%;
+        padding: 40px 20px;
+        margin: auto;
+        border: none;
+        background: #fff;
+        height: auto;
+        z-index: 99;
+      }
+    }
+  }
+}
