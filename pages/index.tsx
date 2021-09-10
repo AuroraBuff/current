@@ -6,9 +6,6 @@ import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 
 export const config = { map: true };
-export async function getServerSideProps() {
-  return { props: {} };
-}
 const Home: NextPage = () => {
   let [transform3d, setTransform3d] = useState({
     transform: "translate3d(0, 0, 0px)",
