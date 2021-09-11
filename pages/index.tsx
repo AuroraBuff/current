@@ -1,32 +1,82 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
+import { Throttle } from "../utlis/index";
+import { motion, useCycle } from "framer-motion";
 import Link from "next/link";
+import { NavBtn } from "../components/NavBtn";
+import { useDimensions } from "../components/use-dimensions";
+interface Type {
+  d?: string;
+  transition?: {
+    duration: number;
+  };
+  variants: {
+    open: {
+      d?: string;
+      opacity?: number;
+    };
+    closed: {
+      d?: string;
+      opacity?: number;
+    };
+  };
+}
+const Path = (props: Type) => (
+  <motion.path
+    fill="transparent"
+    strokeWidth="3"
+    stroke="hsl(0, 0%, 18%)"
+    strokeLinecap="round"
+    {...props}
+  />
+);
 
 export const config = { map: true };
 const Home: NextPage = () => {
-  let [transform3d, setTransform3d] = useState({
-    transform: "translate3d(0, 0, 0px)",
-  });
+  const [isOpen, toggleOpen] = useCycle(false, true);
+  let [transform3d, setTransform3d] = useState({ x: 0, y: 0 });
   let [posts, setPosts] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const containerRef = useRef(null);
+  const { height } = useDimensions(containerRef);
   async function transform(screenX: number, screenY: number) {
-    let x, y;
+    let x: number, y: number;
     let Width = window.innerWidth / 2;
     let Height = window.innerHeight / 2;
-    x = ((Width - screenX) / 18).toFixed(1);
-    y = ((Height - screenY) / 18).toFixed(1);
-    await setTransform3d({
-      transform: `translate3d(${x}px, ${y}px, 0px)`,
-    });
+    x = +((Width - screenX) / 20).toFixed(1);
+    y = +((Height - screenY) / 20).toFixed(1);
+    await setTransform3d({ x, y });
   }
   function handleMouseMove(e: any) {
     window.requestAnimationFrame(() => {
       transform(e.screenX, e.screenY);
     });
   }
-  // let postList =
+  const sidebar = {
+    open: (height = 1000) => ({
+      clipPath: `circle(${height}px at 40px 40px)`,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+        restDelta: 0,
+      },
+    }),
+    closed: {
+      clipPath: "circle(0px at 0px 0px)",
+      transition: {
+        // delay: 0.5,
+        type: "spring",
+        // stiffness: 400,
+        damping: 20,
+      },
+    },
+  };
+  let Mask = () => (isOpen ? <div></div> : "");
+  useEffect(() => {
+    console.log(isOpen);
+  }, [isOpen]);
   return (
     <div className={styles.container}>
       <Head>
@@ -36,9 +86,28 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <div className={styles.main}>
+          <motion.nav
+            initial={false}
+            animate={isOpen ? "open" : "closed"}
+            custom={height}
+            ref={containerRef}
+          >
+            <motion.div className={styles.background} variants={sidebar} />
+            <div className={styles.head}>
+              <h1>Aurora</h1>
+              <div className={styles.headBtn}>
+                <NavBtn toggle={() => toggleOpen()} />
+              </div>
+            </div>
+          </motion.nav>
+          {}
           <div className={styles.Cover} onMouseMove={handleMouseMove}>
-            <div className={styles.image} style={transform3d}>
-              <div className={styles.image2}>
+            <div className={styles.image}>
+              <motion.div
+                animate={transform3d}
+                transition={{ ease: "easeOut", duration: 0.5 }}
+                className={styles.motion}
+              >
                 <Image
                   className={styles.img}
                   src="http://g.auroraone.top/1594348066004.png"
@@ -49,9 +118,9 @@ const Home: NextPage = () => {
                   objectFit="cover"
                   alt=""
                 />
-              </div>
+              </motion.div>
             </div>
-            <div className={styles.mask}></div>
+            <div className={styles.mask} />
           </div>
         </div>
         <div className={styles.content}>

@@ -5,8 +5,8 @@
 .main {
   width: 100%;
   height: 100%;
-  transition: all 0.5s;
   overflow: hidden;
+  position: relative;
 }
 /* 自定义 */
 .Cover {
@@ -14,26 +14,60 @@
   height: 100vh;
   position: relative;
 }
+.head {
+  position: absolute;
+  width: calc(100% - 100px);
+  height: 50px;
+  // background-color: #fff;
+  margin: 50px 50px 0 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 11;
+  h1 {
+    color: #fff;
+  }
+  .headBtn {
+    .button {
+      outline: none;
+      border: none;
+      user-select: none;
+      cursor: pointer;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+      width: 40px;
+      height: 30px;
+      border-radius: 8px;
+      // border-radius: 50%;
+      // background: transparent;
+      background: #fff;
+      z-index: 10;
+    }
+  }
+}
 .image {
   width: calc(100vw + 200px);
   height: calc(100vh + 200px);
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  transform: translate3d(0px, 0px, 0px) rotate(0.0001deg);
   position: absolute;
   display: block;
   left: 0px;
   top: 0px;
   margin-left: -75px;
   margin-top: -100px;
+  .motion {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .img {
+    margin-top: 20px;
+  }
 }
-.image2 {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.img {
-  margin-top: 20px;
-}
+
 .content {
   width: 1200px;
   margin: auto;
@@ -129,7 +163,16 @@
     }
   }
 }
-
+.background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  opacity: 0.8;
+  background: #fff;
+  z-index: 11;
+}
 .footer {
   width: 100%;
   height: 100px;
